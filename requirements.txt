@@ -1,5 +1,6 @@
 streamlit
-fastapi
+fastapi==0.100.0
+hypercorn==0.14.4
 uvicorn[standard]
 python-multipart
 torch
@@ -10,5 +11,7 @@ langchain-core
 langchain
 python-doctr
 tf2onnx
-hypercorn
 opencv-python-headless
+Pillow
+numpy
+pandas

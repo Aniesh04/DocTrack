@@ -17,7 +17,7 @@ db_handler = DatabaseHandler()
 data_obj = DataLoader()
 
 @app.get("/")
-def get_status():
+async def get_status():
     return "Status: OK"
 
 @app.post("/process-multiple-files")
