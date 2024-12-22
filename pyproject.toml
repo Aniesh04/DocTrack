@@ -6,15 +6,16 @@ authors = ["DeviousLab <deviouslab@gmail.com>"]
 license = "MIT"
 
 [tool.poetry.dependencies]
-python = "^3.10"
-fastapi = "^0.80.0"
-uvicorn = "^0.18.3"
+python = "^3.11.2"
+fastapi = "^0.115.6"
+uvicorn = "^0.34.0"
 streamlit = "^1.41.1"
-python-doctr = "^0.5.1"  # Adjust to the doctr version you need
-torch = "^2.0.0"  # Required for doctr
-numpy = "^1.24.0"
-Pillow = "^9.5.0"
-opencv-python-headless = "^4.7.0"  # Required for image processing
+Hypercorn = "^0.17.3"
+python-doctr = "^0.10.0"  # Adjust to the doctr version you need
+torch = "^2.5.1"  # Required for doctr
+numpy = "^1.26.4"
+Pillow = "^11.0.0"
+opencv-python-headless = "^4.10.0.84"  # Required for image processing
 
 
 [tool.poetry.dev-dependencies]
