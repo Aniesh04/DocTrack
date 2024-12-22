@@ -11,3 +11,4 @@ langchain
 python-doctr
 tf2onnx
 hypercorn
+opencv-python-headless
