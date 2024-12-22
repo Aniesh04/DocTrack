@@ -20,9 +20,6 @@ class DataLoader:
         # for f in files:
         if f.endswith(".jpg") or f.endswith(".png") or f.endswith("jpeg"):
             model = ocr_predictor(pretrained=True)
-            # PDF
-            # doc = DocumentFile.from_pdf("/content/test.pdf")
-
             doc = DocumentFile.from_images(f)
             # Analyze
             result = model(doc)
@@ -38,8 +35,6 @@ class DataLoader:
             result = model(doc)
             text_output = str(f) 
             text_output += "/n" + result.render()
-            # print(text_output)
-            
             return text_output
 
         elif f.endswith(".docx"):

@@ -4,6 +4,8 @@ import shutil
 from pydantic import BaseModel
 from ocr import DataLoader
 import uvicorn
+from db import DatabaseHandler
+import pandas as pd
 
 import logging
 logging.basicConfig(level=logging.DEBUG)
@@ -11,6 +13,7 @@ logger = logging.getLogger(__name__)
 
 
 app = FastAPI()
+db_handler = DatabaseHandler()
 data_obj = DataLoader()
 
 @app.get("/")
@@ -60,6 +63,50 @@ async def get_df(filepaths: List[str]):
 
 
 
+@app.post("/save-df")
+async def save_df(filepaths: List[str]):
+    try:
+        data_obj.add_rows(filepaths)
+        df1 = data_obj.json_to_df()
 
+        # Save DataFrame to the database
+        response = db_handler.insert_dataframe(df1)
+        return response
+    except Exception as e:
+        return {"error": str(e)}
 
+@app.get("/get-records")
+async def get_records():
+    """
+    Retrieve all records from the database.
+    """
+    try:
+        records = db_handler.get_all_records()
+        return records
+    except Exception as e:
+        return {"error": str(e)}
+
+@app.post("/update-records")
+async def update_records(data: List[dict]):
+    """
+    Update database records with modified data from the Streamlit editor.
+    """
+    try:
+        df = pd.DataFrame(data)
+        response = db_handler.update_records(df)
+        return response
+    except Exception as e:
+        return {"error": str(e)}
+
+@app.post("/clear-database")
+async def clear_database():
+    """
+    Endpoint to clear all records from the database.
+    """
+    try:
+        response = db_handler.clear_all_records()
+        return response
+    except Exception as e:
+        logger.error(f"Error clearing database: {e}")
+        return {"error": str(e)}
 
