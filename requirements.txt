@@ -1,0 +1,13 @@
+streamlit
+fastapi
+uvicorn[standard]
+python-multipart
+torch
+torchvision
+torchaudio
+langchain-google-genai
+langchain-core
+langchain
+python-doctr
+tf2onnx
+hypercorn
