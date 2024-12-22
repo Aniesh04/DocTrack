@@ -1,17 +1,18 @@
 fastapi==0.100.0
 streamlit
 hypercorn
-uvicorn[standard]
+# uvicorn[standard]
 python-multipart
 torch
-torchvision
-torchaudio
+# torchvision
+# torchaudio
 langchain-google-genai
 langchain-core
 langchain
 python-doctr
 tf2onnx
 opencv-python-headless
+opencv-python
 Pillow
 numpy
 pandas

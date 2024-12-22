@@ -1,16 +1,15 @@
 from fastapi import FastAPI, File, UploadFile
 from typing import List
 import shutil
-from pydantic import BaseModel
+# from pydantic import BaseModel
 from ocr import DataLoader
-import uvicorn
+# import uvicorn
 from db import DatabaseHandler
 import pandas as pd
 
 import logging
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
-
 
 app = FastAPI()
 db_handler = DatabaseHandler()
