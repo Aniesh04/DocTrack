@@ -178,6 +178,7 @@ SQLAlchemy==2.0.30
 sqlparse==0.4.4
 srsly==2.4.8
 starlette==0.41.3
+streamlit
 sympy==1.13.1
 tbb==2021.13.0
 tenacity==8.2.3
