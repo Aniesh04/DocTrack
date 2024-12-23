@@ -4,34 +4,21 @@ FROM python:3.11-slim
 # Set the working directory in the container
 WORKDIR /app
 
-# Install system dependencies
-RUN apt-get update && apt-get install -y \
-    libgl1 \
-    libglib2.0-0 \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
+# Copy the dependencies file to the working directory
+COPY requirements.txt ./requirements.txt
+COPY pyproject.toml ./pyproject.toml
 
-# Copy pyproject.toml and poetry.lock (if available) to the container
-COPY pyproject.toml poetry.lock* /app/
+# Install Poetry (if using pyproject.toml)
+RUN pip install poetry
 
-# Install Poetry
-RUN pip install --no-cache-dir poetry
+# Install system dependencies required by some packages
+RUN apt-get update && apt-get install -y libgl1 libglib2.0-0 && apt-get clean
 
-# Configure Poetry to not create a virtual environment
-RUN poetry config virtualenvs.create false
+# Install Python dependencies
+RUN poetry install --no-dev || pip install -r requirements.txt
 
-# Install dependencies using Poetry
-RUN poetry install --no-root
+# Copy the rest of the application code to the working directory
+COPY . .
 
-# Copy the rest of the application code to the container
-COPY . /app
-
-# Expose the application port (for FastAPI)
-EXPOSE 8000
-
-# Set environment variables
-ENV PYTHONUNBUFFERED=1 \
-    PORT=8000
-
-# Start the application with hypercorn
-CMD ["hypercorn", "main:app", "--bind", "[::]:$PORT"]
+# Set the command to start the application
+CMD ["hypercorn", "main:app", "--bind", "[::]:8000"]
