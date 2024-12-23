@@ -5,17 +5,17 @@ description = "This example starts up a FastAPI server"
 authors = ["DeviousLab <deviouslab@gmail.com>"]
 license = "MIT"
 
-[tool.poetry.dependencies]
-python = "^3.11.2"
-fastapi = "^0.115.6"
-uvicorn = "^0.34.0"
-streamlit = "^1.41.1"
-Hypercorn = "^0.17.3"
-python-doctr = "^0.10.0"  # Adjust to the doctr version you need
-torch = "^2.5.1"  # Required for doctr
-numpy = "^1.26.4"
-Pillow = "^11.0.0"
-opencv-python-headless = "^4.10.0.84"  # Required for image processing
+# [tool.poetry.dependencies]
+# python = "^3.11.2"
+# fastapi = "^0.115.6"
+# uvicorn = "^0.34.0"
+# streamlit = "^1.41.1"
+# Hypercorn = "^0.17.3"
+# python-doctr = "^0.10.0"  # Adjust to the doctr version you need
+# torch = "^2.5.1"  # Required for doctr
+# numpy = "^1.26.4"
+# Pillow = "^11.0.0"
+# opencv-python-headless = "^4.10.0.84"  # Required for image processing
 
 
 [tool.poetry.dev-dependencies]
