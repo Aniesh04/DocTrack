@@ -8,6 +8,9 @@ from langchain_core.prompts import ChatPromptTemplate
 from langchain.schema.output_parser import StrOutputParser
 from langchain.schema.runnable import RunnablePassthrough
 import pandas as pd
+import logging
+logging.basicConfig(level=logging.DEBUG)
+logger = logging.getLogger(__name__)
 
 if "GOOGLE_API_KEY" not in os.environ:
         os.environ["GOOGLE_API_KEY"] = "AIzaSyC5KEY_0biZ7s7nTvhV7Endn7DZKDe3-pY"
@@ -16,34 +19,36 @@ class DataLoader:
     def __init__(self):
         self.df = []
 
-    def extract(self,f):
-        # for f in files:
-        if f.endswith(".jpg") or f.endswith(".png") or f.endswith("jpeg"):
-            model = ocr_predictor(pretrained=True)
-            doc = DocumentFile.from_images(f)
-            # Analyze
-            result = model(doc)
-            text_output = str(f) 
-            text_output += "/n" + result.render()
-            # print(text_output)
-            
-            return text_output
-        
-        elif f.endswith(".pdf"):
-            doc = DocumentFile.from_pdf(f)
-            model = ocr_predictor(pretrained=True)
-            result = model(doc)
-            text_output = str(f) 
-            text_output += "/n" + result.render()
-            return text_output
+    def extract(self, f):
+        try:
+            if f.endswith(".jpg") or f.endswith(".png") or f.endswith("jpeg"):
+                model = ocr_predictor(pretrained=True)
+                doc = DocumentFile.from_images(f)
+                result = model(doc)
+                text_output = str(f) + "\n" + result.render()
+                return text_output
 
-        elif f.endswith(".docx"):
-            doc = Document(f)
-            text_output = str(f) + "/n"
-            for paragraph in doc.paragraphs:
-                text_output += paragraph.text
-            return text_output
+            elif f.endswith(".pdf"):
+                doc = DocumentFile.from_pdf(f)
+                model = ocr_predictor(pretrained=True)
+                result = model(doc)
+                text_output = str(f) + "\n" + result.render()
+                return text_output
 
+            elif f.endswith(".docx"):
+                doc = Document(f)
+                text_output = str(f) + "\n"
+                for paragraph in doc.paragraphs:
+                    text_output += paragraph.text
+                return text_output
+
+            else:
+                raise ValueError(f"Unsupported file format: {f}")
+
+        except Exception as e:
+            # Log the error and return it
+            logger.error(f"Error extracting file {f}: {e}")
+            return {"error": str(e)}
 
 
     def llm_parse(self,ocr_text):
