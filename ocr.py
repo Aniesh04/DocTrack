@@ -104,49 +104,10 @@ class DataLoader:
         df1 = pd.DataFrame(json_res)
         self.df.clear()
         return df1
-
-    # def json_to_df(self):
-    #     from pandas import json_normalize
-
-    #     # Debug: Print raw JSON responses
-    #     print("Raw JSON responses:", self.df)
-
-    #     try:
-    #         # Flatten nested JSON using json_normalize
-    #         flattened_responses = []
-    #         for item in self.df:
-    #             if "documents" in item:
-    #                 # If nested "documents" key exists, normalize it
-    #                 nested_docs = item.pop("documents", [])
-    #                 for nested_doc in nested_docs:
-    #                     flattened_item = {**item, **nested_doc}
-    #                     flattened_responses.append(flattened_item)
-    #             else:
-    #                 flattened_responses.append(item)
-
-    #         # Create a DataFrame from the flattened list
-    #         df1 = pd.DataFrame(flattened_responses)
-
-    #         # Debug: Print the cleaned DataFrame
-    #         print("Flattened DataFrame:\n", df1.head())
-
-    #         # Handle missing values (replace NaN with "NA")
-    #         df1 = df1.fillna("NA")
-
-    #         # Clear the internal data list
-    #         self.df.clear()
-    #         return df1
-    #     except Exception as e:
-    #         print(f"Error creating DataFrame: {e}")
-    #         return pd.DataFrame()  # Return an empty DataFrame on failure
-
-
     
     # def remove_row(self):
     #     pass
         
-
-
 
 
 # text = extract("Aniesh_Passport.pdf")
