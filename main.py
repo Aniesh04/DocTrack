@@ -43,22 +43,7 @@ async def process_multiple_files(files: List[UploadFile] = File(...)):
 #     logger.debug("Data before serialization: %s", df1.to_dict(orient="records"))
 
 #     return df1.to_dict(orient="records")
-    # return df
-# @app.post("/get-df")
-# async def get_df(filepaths: List[str]):
-#     try:
-#         if not isinstance(filepaths, list) or not all(isinstance(path, str) for path in filepaths):
-#             return {"error": "Invalid file paths format"}
-
-#         # Process files and create dataframe
-#         data_obj.add_rows(filepaths)
-#         df1 = data_obj.json_to_df()
-        
-#         logger.debug("Data before serialization: %s", df1.to_dict(orient="records"))
-#         return df1.to_dict(orient="records")  # Return as JSON-serializable dict
-#     except Exception as e:
-#         logger.error(f"Error in /get-df: {e}")
-#         return {"error": str(e)}
+#     return df
 @app.post("/get-df")
 async def get_df(filepaths: List[str]):
     try:
@@ -68,13 +53,28 @@ async def get_df(filepaths: List[str]):
         # Process files and create dataframe
         data_obj.add_rows(filepaths)
         df1 = data_obj.json_to_df()
-
-        # Convert the DataFrame to a list of dictionaries
-        response = df1.to_dict(orient="records")
-        return response if response else []
+        
+        logger.debug("Data before serialization: %s", df1.to_dict(orient="records"))
+        return df1.to_dict(orient="records")  # Return as JSON-serializable dict
     except Exception as e:
-        logger.error(f"Error processing files: {e}")
-        return {"error": f"Failed to process file: {e}"}
+        logger.error(f"Error in /get-df: {e}")
+        return {"error": str(e)}
+# @app.post("/get-df")
+# async def get_df(filepaths: List[str]):
+#     try:
+#         if not isinstance(filepaths, list) or not all(isinstance(path, str) for path in filepaths):
+#             return {"error": "Invalid file paths format"}
+
+#         # Process files and create dataframe
+#         data_obj.add_rows(filepaths)
+#         df1 = data_obj.json_to_df()
+
+#         # Convert the DataFrame to a list of dictionaries
+#         response = df1.to_dict(orient="records")
+#         return response if response else []
+#     except Exception as e:
+#         logger.error(f"Error processing files: {e}")
+#         return {"error": f"Failed to process file: {e}"}
 
 
 

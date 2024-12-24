@@ -66,27 +66,24 @@ if st.button("Submit"):
         # except requests.exceptions.JSONDecodeError:
         #     st.error("Backend returned an invalid response (not JSON). Check logs for details.")
         #     st.write("Raw Backend Response:", df_response.content.decode("utf-8"))
-        try:
-            if df_response.status_code == 200:
-                df = pd.DataFrame(df_response.json())
-                
+        
+        if df_response.status_code == 200:
+            df = pd.DataFrame(df_response.json())
+            
 
-                # Update counts based on the DataFrame
-                uptodate_count = df['Status'].apply(lambda x: x == "Up-to-date").sum()
-                overdue_count = df['Status'].apply(lambda x: x == "Overdue").sum()
-                expiring_soon_count = df['Status'].apply(lambda x: x == "Expiring soon").sum()
+            # Update counts based on the DataFrame
+            uptodate_count = df['Status'].apply(lambda x: x == "Up-to-date").sum()
+            overdue_count = df['Status'].apply(lambda x: x == "Overdue").sum()
+            expiring_soon_count = df['Status'].apply(lambda x: x == "Expiring soon").sum()
 
-                # Save the DataFrame and counts to session state
-                st.session_state.dataframe = df
-                st.session_state.uptodate_count = uptodate_count
-                st.session_state.overdue_count = overdue_count
-                st.session_state.expiring_soon_count = expiring_soon_count
+            # Save the DataFrame and counts to session state
+            st.session_state.dataframe = df
+            st.session_state.uptodate_count = uptodate_count
+            st.session_state.overdue_count = overdue_count
+            st.session_state.expiring_soon_count = expiring_soon_count
 
-            else:
-                st.error(f"Failed to retrieve dataframe: {df_response.content.decode('utf-8')}")
-        except requests.exceptions.JSONDecodeError:
-            st.error("Backend returned an invalid response (not JSON). Check logs for details.")
-            st.write("Raw Backend Response:", df_response.content.decode("utf-8"))
+        else:
+            st.error(f"Failed to retrieve dataframe: {df_response.content.decode('utf-8')}")
     else:
         st.error(f"File processing failed: {process_response.content.decode('utf-8')}")
 
