@@ -41,7 +41,7 @@ if st.button("Submit"):
             files_to_upload.append(("files", (uploaded_file.name, open(temp_file.name, "rb"), uploaded_file.type)))
 
     # Process files via the API
-    process_response = requests.post("http://127.0.0.1:8000/process-multiple-files", files=files_to_upload)
+    process_response = requests.post("https://doctrack-tx9w.onrender.com/process-multiple-files", files=files_to_upload)
 
     if process_response.status_code == 200:
         st.success("Files processed successfully!")
@@ -49,7 +49,7 @@ if st.button("Submit"):
         st.session_state.processed_data = processed_data
 
         # Retrieve the DataFrame from the backend
-        df_response = requests.post("http://127.0.0.1:8000/get-df", json=filepaths)
+        df_response = requests.post("https://doctrack-tx9w.onrender.com/get-df", json=filepaths)
 
         if df_response.status_code == 200:
             df = pd.DataFrame(df_response.json())
@@ -145,7 +145,7 @@ if st.session_state.dataframe is not None:
 
             # Send updated records to backend
             update_response = requests.post(
-                "http://127.0.0.1:8000/update-records",
+                "https://doctrack-tx9w.onrender.com/update-records",
                 json=st.session_state.dataframe.to_dict(orient="records"),
             )
 
@@ -173,7 +173,7 @@ if st.session_state.dataframe is not None:
     # Clear all rows button
     if st.button("Clear All Rows"):
         # Call the backend to clear the database
-        clear_response = requests.post("http://127.0.0.1:8000/clear-database")
+        clear_response = requests.post("https://doctrack-tx9w.onrender.com/clear-database")
         if clear_response.status_code == 200:
             response = clear_response.json()
             if "success" in response:
