@@ -50,9 +50,11 @@ if st.button("Submit"):
 
         # Retrieve the DataFrame from the backend
         df_response = requests.post("https://doctrack-tx9w.onrender.com/get-df", json=filepaths)
+        st.write("Backend Response:", df_response) 
 
         if df_response.status_code == 200:
             df = pd.DataFrame(df_response.json())
+            
 
             # Update counts based on the DataFrame
             uptodate_count = df['Status'].apply(lambda x: x == "Up-to-date").sum()
