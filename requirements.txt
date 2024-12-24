@@ -209,7 +209,8 @@
 # watchdog==6.0
 
 pandas == 2.2.3
-fastapi
+fastapi==0.100.0
+hypercorn==0.14.4
 streamlit
 hypercorn
 python-docx
