@@ -87,14 +87,14 @@ class DataLoader:
                 | StrOutputParser()
             )
 
-        try:
-            response = chain.invoke(ocr_text)
-            res = response[7:-4].strip()
-            json_object = json.loads(res)
-            return json_object
-        except json.JSONDecodeError as e:
-            print(f"JSON parsing error: {e}")
-            return {"error": "Invalid LLM response"}
+        # try:
+        response = chain.invoke(ocr_text)
+        res = response[7:-4].strip()
+        json_object = json.loads(res)
+        return json_object
+        # except json.JSONDecodeError as e:
+        #     print(f"JSON parsing error: {e}")
+        #     return {"error": "Invalid LLM response"}
     
     def add_rows(self,filepaths):
         for file in filepaths:

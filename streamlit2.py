@@ -53,7 +53,7 @@ if st.button("Submit"):
 
         if df_response.status_code == 200:
             df = pd.DataFrame(df_response.json())
-
+            
             # Update counts based on the DataFrame
             uptodate_count = df['Status'].apply(lambda x: x == "Up-to-date").sum()
             overdue_count = df['Status'].apply(lambda x: x == "Overdue").sum()
