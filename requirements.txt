@@ -230,20 +230,20 @@ SQLAlchemy==2.0.30
 sqlparse==0.4.4
 srsly==2.4.8
 stack-data==0.6.3
-starlette==0.37.2
+starlette==0.41.3
 streamlit==1.41.1
 sympy==1.12
 tbb==2021.13.0
 tenacity==8.2.3
-tf2onnx
+tf2onnx == 1.8.4
 thinc==8.2.3
 threadpoolctl==3.3.0
 tiktoken==0.5.2
 tokenizers==0.15.2
 toml==0.10.2
-torch
-torchvision
-torchaudio
+torch == 2.5.1
+torchvision == 0.20.1
+# torchaudio
 tornado==6.4.1
 tqdm==4.66.3
 traitlets==5.14.3
@@ -256,8 +256,8 @@ typing-inspect==0.9.0
 typing_extensions==4.12.2
 tzdata==2023.3
 ujson==5.9.0
-urllib3
-uvicorn
+urllib3 == 2.3.0
+uvicorn == 0.32.0
 virtualenv==20.25.1
 wasabi==1.1.2
 watchdog==6.0.0

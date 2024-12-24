@@ -189,6 +189,3 @@ if st.session_state.dataframe is not None:
         else:
             st.error(f"Failed to clear database: {clear_response.content.decode('utf-8')}")
 
-# # Display the DataFrame in the app
-# else:
-#     st.dataframe(st.session_state.dataframe)
