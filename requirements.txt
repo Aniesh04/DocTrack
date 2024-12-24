@@ -37,7 +37,7 @@ Django==4.2.7
 dnspython==2.6.1
 email_validator==2.1.1
 executing==2.0.1
-fastapi==0.115.6
+fastapi
 feedparser==6.0.10
 filelock==3.13.1
 filetype==1.2.0
@@ -178,7 +178,7 @@ SQLAlchemy==2.0.30
 sqlparse==0.4.4
 srsly==2.4.8
 stack-data==0.6.3
-starlette==0.37.2
+starlette
 streamlit==1.41.1
 sympy==1.12
 tbb==2021.13.0
