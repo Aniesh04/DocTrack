@@ -32,16 +32,17 @@ uploaded_files = st.file_uploader(label="Upload Documents", accept_multiple_file
 # Submit button to process files and display results
 if st.button("Submit"):
     files_to_upload = []
-    filepaths = []
 
     for uploaded_file in uploaded_files:
-        with tempfile.NamedTemporaryFile(delete=False, suffix=f"_{uploaded_file.name}") as temp_file:
-            temp_file.write(uploaded_file.read())
-            filepaths.append(temp_file.name)
-            files_to_upload.append(("files", (uploaded_file.name, open(temp_file.name, "rb"), uploaded_file.type)))
+        files_to_upload.append(
+            ("files", (uploaded_file.name, uploaded_file.read(), uploaded_file.type))
+        )
 
     # Process files via the API
-    process_response = requests.post("https://doctrack-tx9w.onrender.com/process-multiple-files", files=files_to_upload)
+    process_response = requests.post(
+        "https://doctrack-tx9w.onrender.com/process-multiple-files",
+        files=files_to_upload
+    )
 
     if process_response.status_code == 200:
         st.success("Files processed successfully!")
@@ -49,11 +50,14 @@ if st.button("Submit"):
         st.session_state.processed_data = processed_data
 
         # Retrieve the DataFrame from the backend
-        df_response = requests.post("https://doctrack-tx9w.onrender.com/get-df", json=filepaths)
-
+        df_response = requests.post(
+            "https://doctrack-tx9w.onrender.com/get-df", 
+            json=processed_data  # Pass processed file paths from the backend
+        )
+        
         if df_response.status_code == 200:
             df = pd.DataFrame(df_response.json())
-            
+
             # Update counts based on the DataFrame
             uptodate_count = df['Status'].apply(lambda x: x == "Up-to-date").sum()
             overdue_count = df['Status'].apply(lambda x: x == "Overdue").sum()

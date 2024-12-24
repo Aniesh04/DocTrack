@@ -19,17 +19,31 @@ data_obj = DataLoader()
 async def get_status():
     return "Status: OK"
 
+#local
+# @app.post("/process-multiple-files")
+# async def process_multiple_files(files: List[UploadFile] = File(...)):
+#     file_paths = []
+
+#     for file in files:
+#         # Save each file temporarily in the backend
+#         temp_file_path = f"temp_{file.filename}"
+#         with open(temp_file_path, "wb") as temp_file:
+#             shutil.copyfileobj(file.file, temp_file)
+
+#         # Append the file path to the list
+#         file_paths.append(temp_file_path)
+
+#     return file_paths
 @app.post("/process-multiple-files")
 async def process_multiple_files(files: List[UploadFile] = File(...)):
     file_paths = []
 
     for file in files:
-        # Save each file temporarily in the backend
-        temp_file_path = f"temp_{file.filename}"
+        # Save each file temporarily on the backend
+        temp_file_path = f"/tmp/{file.filename}"  # Save in backend's /tmp/ directory
         with open(temp_file_path, "wb") as temp_file:
             shutil.copyfileobj(file.file, temp_file)
 
-        # Append the file path to the list
         file_paths.append(temp_file_path)
 
     return file_paths
