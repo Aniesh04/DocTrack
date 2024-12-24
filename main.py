@@ -43,7 +43,7 @@ async def process_multiple_files(files: List[UploadFile] = File(...)):
 #     logger.debug("Data before serialization: %s", df1.to_dict(orient="records"))
 
 #     return df1.to_dict(orient="records")
-#     # return df
+    # return df
 @app.post("/get-df")
 async def get_df(filepaths: List[str]):
     try:
@@ -62,17 +62,17 @@ async def get_df(filepaths: List[str]):
 
 
 
-@app.post("/save-df")
-async def save_df(filepaths: List[str]):
-    try:
-        data_obj.add_rows(filepaths)
-        df1 = data_obj.json_to_df()
+# @app.post("/save-df")
+# async def save_df(filepaths: List[str]):
+#     try:
+#         data_obj.add_rows(filepaths)
+#         df1 = data_obj.json_to_df()
 
-        # Save DataFrame to the database
-        response = db_handler.insert_dataframe(df1)
-        return response
-    except Exception as e:
-        return {"error": str(e)}
+#         # Save DataFrame to the database
+#         response = db_handler.insert_dataframe(df1)
+#         return response
+#     except Exception as e:
+#         return {"error": str(e)}
 
 @app.get("/get-records")
 async def get_records():
