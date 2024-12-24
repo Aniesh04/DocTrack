@@ -215,6 +215,7 @@ hypercorn
 python-docx
 uvicorn[standard]
 python-multipart
+python-docx==1.1.2
 torch
 torchvision
 torchaudio
@@ -227,4 +228,4 @@ opencv-python-headless
 opencv-python
 Pillow
 urllib3
-exceptions
+requests==2.31.0
