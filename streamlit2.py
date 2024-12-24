@@ -52,6 +52,21 @@ if st.button("Submit"):
         df_response = requests.post("https://doctrack-tx9w.onrender.com/get-df", json=filepaths)
         st.write("Backend Response:", df_response.json()) 
 
+        try:
+            backend_data = df_response.json()
+            if df_response.status_code == 200:
+                if "error" in backend_data:
+                    st.error(f"Backend Error: {backend_data['error']}")
+                else:
+                    df = pd.DataFrame(backend_data)
+                    st.write("DataFrame Loaded Successfully", df)
+                    st.session_state.dataframe = df
+            else:
+                st.error(f"Failed to retrieve dataframe: {df_response.content.decode('utf-8')}")
+        except requests.exceptions.JSONDecodeError:
+            st.error("Backend returned an invalid response (not JSON). Check logs for details.")
+            st.write("Raw Backend Response:", df_response.content.decode("utf-8"))
+
         if df_response.status_code == 200:
             df = pd.DataFrame(df_response.json())
             

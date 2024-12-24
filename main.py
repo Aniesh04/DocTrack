@@ -74,7 +74,8 @@ async def get_df(filepaths: List[str]):
         return response if response else []
     except Exception as e:
         logger.error(f"Error processing files: {e}")
-        return {"error": str(e)}
+        return {"error": f"Failed to process file: {e}"}
+
 
 
 
