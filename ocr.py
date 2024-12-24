@@ -70,8 +70,6 @@ class DataLoader:
             Status: extracted answer / "NA"    
             
         Note: As mentioned in the format, if you don't get the answer fill the field with "NA"
-        Note: Always return a flat JSON response with no nested keys. Do not group documents or include additional fields like "documents".
-
         """
         )
 
