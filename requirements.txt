@@ -181,7 +181,7 @@ srsly==2.4.8
 stack-data==0.6.3
 starlette
 streamlit==1.41.1
-sympy==1.12
+# sympy==1.12
 sqlite3
 tbb==2021.13.0
 tenacity==8.2.3
