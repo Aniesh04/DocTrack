@@ -50,7 +50,7 @@ if st.button("Submit"):
 
         # Retrieve the DataFrame from the backend
         df_response = requests.post("https://doctrack-tx9w.onrender.com/get-df", json=filepaths)
-        st.write("Backend Response:", df_response) 
+        st.write("Backend Response:", df_response.content) 
 
         if df_response.status_code == 200:
             df = pd.DataFrame(df_response.json())
