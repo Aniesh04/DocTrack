@@ -70,6 +70,8 @@ class DataLoader:
             Status: extracted answer / "NA"    
             
         Note: As mentioned in the format, if you don't get the answer fill the field with "NA"
+        Note: Always return a flat JSON response with no nested keys. Do not group documents or include additional fields like "documents".
+
         """
         )
 
@@ -100,7 +102,7 @@ class DataLoader:
     def json_to_df(self):
         json_res = self.df
         df1 = pd.DataFrame(json_res)
-        self.df.clear
+        self.df.clear()
         return df1
     
     # def remove_row(self):
