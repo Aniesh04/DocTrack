@@ -13,14 +13,14 @@
 - Export to CSV: Download the entire table with a single click for easy sharing and reporting.
 
 **Tech Stack:**
-- Backend: FastAPI, Python
+- Backend: FastAPI
 - Frontend: Streamlit
-- OCR & NLP: Doctr, LangChain, and LLMs (Gemini)
+- OCR & NLP: Doctr, LLM (Gemini)
 - Database: SQLite (or any relational DB)
 - Deployment: Render (Backend), Streamlit Cloud (Frontend)
 
 **Use Cases:**
--  compliance tracking.
+- Compliance tracking.
 - Personal document management (e.g., passports, licenses, ID cards).
 - Organizational reminders for expiring documents.
 
