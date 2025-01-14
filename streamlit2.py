@@ -28,9 +28,11 @@ if "expiring_soon_count" not in st.session_state:
 
 # File upload functionality
 uploaded_files = st.file_uploader(label="Upload Documents", accept_multiple_files=True)
-
+sub_btn = st.button("Submit")
+st.divider()
 # Submit button to process files and display results
-if st.button("Submit"):
+if sub_btn:
+    
     files_to_upload = []
 
     for uploaded_file in uploaded_files:
@@ -40,7 +42,7 @@ if st.button("Submit"):
 
     # Process files via the API
     process_response = requests.post(
-        "https://doctrack-tx9w.onrender.com/process-multiple-files",
+        "http://127.0.0.1:8000/process-multiple-files",
         files=files_to_upload
     )
 
@@ -51,7 +53,7 @@ if st.button("Submit"):
 
         # Retrieve the DataFrame from the backend
         df_response = requests.post(
-            "https://doctrack-tx9w.onrender.com/get-df", 
+            "http://127.0.0.1:8000/get-df", 
             json=processed_data  # Pass processed file paths from the backend
         )
         
@@ -149,7 +151,7 @@ if st.session_state.dataframe is not None:
 
             # Send updated records to backend
             update_response = requests.post(
-                "https://doctrack-tx9w.onrender.com/update-records",
+                "http://127.0.0.1:8000/update-records",
                 json=st.session_state.dataframe.to_dict(orient="records"),
             )
 
@@ -177,17 +179,20 @@ if st.session_state.dataframe is not None:
     # Clear all rows button
     if st.button("Clear All Rows"):
         # Call the backend to clear the database
-        clear_response = requests.post("https://doctrack-tx9w.onrender.com/clear-database")
+        clear_response = requests.post("http://127.0.0.1:8000/clear-database")
         if clear_response.status_code == 200:
             response = clear_response.json()
             if "success" in response:
                 # Clear the DataFrame and session state
-                st.session_state.dataframe = pd.DataFrame()  # Reset DataFrame to empty
+                # cd = st.session_state.dataframe
+                st.session_state.dataframe = pd.DataFrame(data = None, columns=edited_df.columns)  # Reset DataFrame to empty
                 st.session_state.uptodate_count = 0
                 st.session_state.overdue_count = 0
                 st.session_state.expiring_soon_count = 0
 
                 st.success(response["success"])
+                edited_df = pd.DataFrame(None)
+                df = pd.DataFrame(None)
             else:
                 st.error(response.get("error", "Unknown error occurred."))
         else:

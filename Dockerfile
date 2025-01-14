@@ -9,8 +9,14 @@ RUN apt-get update && apt-get install -y \
     default-libmysqlclient-dev \
     build-essential \
     pkg-config \
+    poppler-utils \
+    tesseract-ocr \
+    libtesseract-dev \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
+
+# Install poppler-utils for pdf2image
+# RUN apt-get update && apt-get install -y poppler-utils
 
 # Copy project files into the container
 COPY . /app

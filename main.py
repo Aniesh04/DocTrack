@@ -2,7 +2,7 @@ from fastapi import FastAPI, File, UploadFile
 from typing import List
 import shutil
 # from pydantic import BaseModel
-from ocr import DataLoader
+from tessocr import DataLoader
 # import uvicorn
 from db import DatabaseHandler
 import pandas as pd
@@ -135,6 +135,7 @@ async def clear_database():
     """
     try:
         response = db_handler.clear_all_records()
+        data_obj.df.clear()
         return response
     except Exception as e:
         logger.error(f"Error clearing database: {e}")
