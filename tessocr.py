@@ -10,6 +10,7 @@ from langchain.schema.runnable import RunnablePassthrough
 import pandas as pd
 import logging
 from datetime import date
+import tempfile
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
@@ -24,6 +25,7 @@ if "GOOGLE_API_KEY" not in os.environ:
         os.environ["GOOGLE_API_KEY"] = "AIzaSyC5KEY_0biZ7s7nTvhV7Endn7DZKDe3-pY"
 
 pytesseract.pytesseract.tesseract_cmd = r'/usr/bin/tesseract'
+# pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
 
 class DataLoader:
     def __init__(self):
@@ -41,15 +43,31 @@ class DataLoader:
                 return text_output
 
             elif f.endswith(".pdf"):
-                pages = convert_from_path(f, 500)
-                text = ""
-                for pageNum, imgBlob in enumerate(pages):
-                    text += f"page no.{pageNum}" + "\n"
-                    text += pytesseract.image_to_string(imgBlob,lang='eng')
-                    print("\n")
-                today = date.today()
-                text_output = str(f) + "\n" + "Today Date: " + str(today) + "\n" + "extracted text: " + "\n" + text
-                return text_output
+                # pages = convert_from_path(f, 500)
+                # # pages = convert_from_path(f, 500,poppler_path=r"C:\poppler-24.08.0\Library\bin")
+                # text = ""
+                # for pageNum, imgBlob in enumerate(pages):
+                #     text += f"page no.{pageNum}" + "\n"
+                #     text += pytesseract.image_to_string(imgBlob,lang='eng')
+                #     print("\n")
+                # today = date.today()
+                # text_output = str(f) + "\n" + "Today Date: " + str(today) + "\n" + "extracted text: " + "\n" + text
+                # return text_output
+                try:
+                    text = ""
+                    today = date.today()
+                    
+                    # Use temporary directory to handle images
+                    with tempfile.TemporaryDirectory() as temp_dir:
+                        pages = convert_from_path(f, dpi=150, output_folder=temp_dir)  # Lower DPI to save memory
+                        for page_num, img_blob in enumerate(pages):
+                            text += f"Page no. {page_num + 1}\n"
+                            text += pytesseract.image_to_string(img_blob, lang='eng') + "\n"
+
+                    text_output = f"{f}\nToday Date: {today}\nExtracted Text:\n{text}"
+                    return text_output
+                except Exception as e:
+                    return f"Error: {str(e)}"
 
             elif f.endswith(".docx"):
                 doc = Document(f)

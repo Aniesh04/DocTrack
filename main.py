@@ -50,13 +50,17 @@ async def process_multiple_files(files: List[UploadFile] = File(...)):
 
 @app.post("/get-df")
 async def get_df(filepaths: List[str]):
-    data_obj.add_rows(filepaths)
-        # print(type(df[0]))
-    
-    df1 = data_obj.json_to_df()
-    logger.debug("Data before serialization: %s", df1.to_dict(orient="records"))
+    try: 
+        data_obj.add_rows(filepaths)
+            # print(type(df[0]))
+        
+        df1 = data_obj.json_to_df()
+        logger.debug("Data before serialization: %s", df1.to_dict(orient="records"))
 
-    return df1.to_dict(orient="records")
+        return df1.to_dict(orient="records")
+    except Exception as e:
+        logger.error(f"Error in /get-df: {e}")
+        return {"error": str(e)}
     # return df
 # @app.post("/get-df")
 # async def get_df(filepaths: List[str]):
