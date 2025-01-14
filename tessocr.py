@@ -29,11 +29,7 @@ pytesseract.pytesseract.tesseract_cmd = r'/usr/bin/tesseract'
 
 class DataLoader:
     def __init__(self):
-        self.df = pd.DataFrame()
-
-    def remove_rows(self, ids):
-        # Remove rows with specified ids
-        self.df = self.df[~self.df['id'].isin(ids)]
+        self.df = []
 
     def extract(self, f):
         try:

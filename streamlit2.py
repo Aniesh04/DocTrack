@@ -152,7 +152,7 @@ if st.session_state.dataframe is not None:
             # Send updated records to backend
             update_response = requests.post(
                 # "http://127.0.0.1:8000/update-records",
-                "https://doctrack-2.onrender.com/remove-rows",
+                "https://doctrack-2.onrender.com/update-records",
                 json=st.session_state.dataframe.to_dict(orient="records"),
             )
 
