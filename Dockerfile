@@ -15,9 +15,6 @@ RUN apt-get update && apt-get install -y \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-# Install poppler-utils for pdf2image
-# RUN apt-get update && apt-get install -y poppler-utils
-
 # Copy project files into the container
 COPY . /app
 
@@ -31,4 +28,4 @@ RUN python -m venv /opt/venv \
 EXPOSE 8000
 
 # Set the default command to run the application
-CMD ["hypercorn", "main:app", "--bind", "0.0.0.0:8000"]
+CMD ["/opt/venv/bin/hypercorn", "main:app", "--bind", "0.0.0.0:8000"]

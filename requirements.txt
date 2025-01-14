@@ -210,7 +210,7 @@
 
 pandas == 2.2.3
 fastapi==0.100.0
-hypercorn==0.14.4
+hypercorn
 streamlit
 # hypercorn
 python-docx
