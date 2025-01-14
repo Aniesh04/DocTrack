@@ -58,11 +58,12 @@ class DataLoader:
                     today = date.today()
                     
                     # Use temporary directory to handle images
-                    with tempfile.TemporaryDirectory() as temp_dir:
-                        pages = convert_from_path(f, dpi=150, output_folder=temp_dir)  # Lower DPI to save memory
-                        for page_num, img_blob in enumerate(pages):
-                            text += f"Page no. {page_num + 1}\n"
-                            text += pytesseract.image_to_string(img_blob, lang='eng') + "\n"
+                    # with tempfile.TemporaryDirectory() as temp_dir:
+                        # pages = convert_from_path(f, dpi=150, output_folder=temp_dir)  # Lower DPI to save memory
+                    pages = convert_from_path(f, dpi=150)
+                    for page_num, img_blob in enumerate(pages):
+                        text += f"Page no. {page_num + 1}\n"
+                        text += pytesseract.image_to_string(img_blob, lang='eng') + "\n"
 
                     text_output = f"{f}\nToday Date: {today}\nExtracted Text:\n{text}"
                     return text_output
