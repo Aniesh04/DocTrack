@@ -145,3 +145,14 @@ async def clear_database():
         logger.error(f"Error clearing database: {e}")
         return {"error": str(e)}
 
+@app.post("/remove-rows")
+async def remove_rows(ids: List[int]):
+    """
+    Remove rows with specified IDs from the in-memory DataFrame.
+    """
+    try:
+        data_obj.remove_rows(ids)
+        return {"status": "success", "removed_ids": ids}
+    except Exception as e:
+        logger.error(f"Error removing rows: {e}")
+        return {"error": str(e)}

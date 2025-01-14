@@ -29,7 +29,11 @@ pytesseract.pytesseract.tesseract_cmd = r'/usr/bin/tesseract'
 
 class DataLoader:
     def __init__(self):
-        self.df = []
+        self.df = pd.DataFrame()
+
+    def remove_rows(self, ids):
+        # Remove rows with specified ids
+        self.df = self.df[~self.df['id'].isin(ids)]
 
     def extract(self, f):
         try:
@@ -103,7 +107,7 @@ class DataLoader:
         
             Document name: extracted answer / "NA"
 
-            Expiration/due date: extracted answer / "NA"
+            Expiration/due date: extracted answer(in DD/MM/YYYY format) / "NA" 
 
             Days until expiration: extracted answer / "NA"
                                                             
