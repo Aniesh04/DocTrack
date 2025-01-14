@@ -1,5 +1,5 @@
-from doctr.io import DocumentFile
-from doctr.models import ocr_predictor
+# from doctr.io import DocumentFile
+# from doctr.models import ocr_predictor
 from docx import Document
 import os
 import json
