@@ -16,15 +16,16 @@ logger = logging.getLogger(__name__)
 
 
 import os
-import pytesseract
+# import pytesseract
 from pdf2image import convert_from_path
 import glob
 from PIL import Image
+import tesserocr
 
 if "GOOGLE_API_KEY" not in os.environ:
         os.environ["GOOGLE_API_KEY"] = "AIzaSyC5KEY_0biZ7s7nTvhV7Endn7DZKDe3-pY"
 
-pytesseract.pytesseract.tesseract_cmd = r'/usr/bin/tesseract'
+# pytesseract.pytesseract.tesseract_cmd = r'/usr/bin/tesseract'
 # pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
 
 class DataLoader:
@@ -33,11 +34,15 @@ class DataLoader:
 
     def extract(self, f):
         try:
-            if f.endswith(".jpg") or f.endswith(".png") or f.endswith("jpeg"):
-                
-                img = Image.open(f)
+            if f.endswith(".jpg") or f.endswith(".png") or f.endswith("jpeg"):  
+                # img = Image.open(f)
 
-                text = pytesseract.image_to_string(img,lang='eng')
+                # text = pytesseract.image_to_string(img,lang='eng')
+                api = tesserocr.PyTessBaseAPI(path='/usr/share/tesseract-ocr/4.00/tessdata') # Update the path if necessary
+                pil_image = Image.open('/content/PAN Card.png')
+                api.SetImage(pil_image)
+                text = api.GetUTF8Text()
+
                 today = date.today()
                 text_output = str(f) + "\n" + "Today Date: " + str(today) + "\n" + "extracted text: " + "\n" + text
                 return text_output
@@ -57,13 +62,14 @@ class DataLoader:
                     text = ""
                     today = date.today()
                     
-                    # Use temporary directory to handle images
-                    # with tempfile.TemporaryDirectory() as temp_dir:
-                        # pages = convert_from_path(f, dpi=150, output_folder=temp_dir)  # Lower DPI to save memory
+                        # pages = convert_from_path(f, dpi=150, output_folder=temp_dir, poppler_path=r"C:\poppler-24.08.0\Library\bin")  # Lower DPI to save memory
                     pages = convert_from_path(f, dpi=150)
                     for page_num, img_blob in enumerate(pages):
                         text += f"Page no. {page_num + 1}\n"
-                        text += pytesseract.image_to_string(img_blob, lang='eng') + "\n"
+                        # text += pytesseract.image_to_string(img_blob, lang='eng') + "\n"
+                        api = tesserocr.PyTessBaseAPI(path='/usr/share/tesseract-ocr/4.00/tessdata') # Update the path if necessary
+                        api.SetImage(img_blob)
+                        text += api.GetUTF8Text()
 
                     text_output = f"{f}\nToday Date: {today}\nExtracted Text:\n{text}"
                     return text_output
@@ -157,11 +163,11 @@ class DataLoader:
 # res = llm_parse(text)
 # print(res[7:-4])
 
-# obj2 = DataLoader()
-# data = obj2.extract(r"C:\Users\Anidhinesh\Documents\Aniesh Docs\E-Docs\Aniesh_Passport.pdf")
+obj2 = DataLoader()
+data = obj2.extract(r"C:\Users\Anidhinesh\Documents\Aniesh Docs\E-Docs\Aniesh_Passport.pdf")
 
 # data = obj.add_row("Aniesh_Passport.pdf")
 # # obj.add_row("temp_Aniesh e-pan.pdf")
 
 # # data = obj.json_to_df()
-# print(data)
+print(data)

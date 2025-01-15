@@ -231,4 +231,5 @@ Pillow
 urllib3
 requests==2.31.0
 pdf2image
-pytesseract
+# pytesseract
+tesserocr
