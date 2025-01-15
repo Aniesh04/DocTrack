@@ -38,7 +38,7 @@ class DataLoader:
                 # img = Image.open(f)
 
                 # text = pytesseract.image_to_string(img,lang='eng')
-                api = tesserocr.PyTessBaseAPI(path='/usr/share/tesseract-ocr/4.00/tessdata') # Update the path if necessary
+                api = tesserocr.PyTessBaseAPI(path='./') # Update the path if necessary
                 pil_image = Image.open('/content/PAN Card.png')
                 api.SetImage(pil_image)
                 text = api.GetUTF8Text()
@@ -67,7 +67,7 @@ class DataLoader:
                     for page_num, img_blob in enumerate(pages):
                         text += f"Page no. {page_num + 1}\n"
                         # text += pytesseract.image_to_string(img_blob, lang='eng') + "\n"
-                        api = tesserocr.PyTessBaseAPI(path='/usr/share/tesseract-ocr/4.00/tessdata') # Update the path if necessary
+                        api = tesserocr.PyTessBaseAPI(path='./') # Update the path if necessary
                         api.SetImage(img_blob)
                         text += api.GetUTF8Text()
 
