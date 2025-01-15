@@ -38,8 +38,8 @@ class DataLoader:
                 # img = Image.open(f)
 
                 # text = pytesseract.image_to_string(img,lang='eng')
-                api = tesserocr.PyTessBaseAPI(path='./') # Update the path if necessary
-                pil_image = Image.open('/content/PAN Card.png')
+                api = tesserocr.PyTessBaseAPI(path='./') 
+                pil_image = Image.open(f)
                 api.SetImage(pil_image)
                 text = api.GetUTF8Text()
 
